@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WhiteRice – Start</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <div class="box">
+      <h1 class="title">WhiteRice</h1>
+      <p class="sub">Einfacher Startbildschirm – Zwei Songs, Play & Pause, Zeit anzeigen und verschieben.</p>
+
+      <div class="tracks">
+        <button class="track-btn" id="t1">▶ Fell In Luv</button>
+        <button class="track-btn" id="t2">▶ Location</button>
+      </div>
+
+      <div class="controls">
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <button id="prev">⏮</button>
+        <button id="next">⏭</button>
+      </div>
+
+      <p class="sub" style="font-size:12px">Hinweis: Autoplay ist oft blockiert – mindestens einmal „Play“ klicken.</p>
+    </div>
+  </div>
+
+  <!-- SoundCloud Widget (versteckt) -->
+  <iframe id="sc" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/adrian-gonzalez-659551024/fell-in-luv-playboicarti-1&auto_play=false&show_user=false&visual=false" allow="autoplay"></iframe>
+  <script src="https://w.soundcloud.com/player/api.js"></script>
+
+  <!-- Bottom Player (Zeit/Seekbar sichtbar + verschiebbar) -->
+  <div class="playerbar">
+    <div class="now" id="now">–</div>
+    <div class="seek"><input type="range" id="seek" min="0" max="1000" step="1" value="0"></div>
+    <div class="time" id="time">0:00 / 0:00</div>
+  </div>
+
+  <script>
+    const TRACKS = [
+      { title: 'Playboi Carti – Fell In Luv', url: 'https://soundcloud.com/adrian-gonzalez-659551024/fell-in-luv-playboicarti-1' },
+      { title: 'Playboi Carti – Location',    url: 'https://soundcloud.com/user-584825425/playboi-carti-location-official-audio-3' }
+    ];
+
+    const iframe = document.getElementById('sc');
+    const widget = SC.Widget(iframe);
+    const now = document.getElementById('now');
+    const time = document.getElementById('time');
+    const seek = document.getElementById('seek');
+
+    let current = 0;        // index in TRACKS
+    let durationMs = 0;     // duration in ms
+    let isSeeking = false;  // while dragging
+
+    // Helpers
+    const fmt = (ms) => {
+      const s = Math.max(0, Math.floor(ms/1000));
+      const m = Math.floor(s/60);
+      const r = s % 60;
+      return m + ':' + String(r).padStart(2,'0');
+    };
+
+    function load(i, autoPlay=false){
+      current = i;
+      const { url, title } = TRACKS[current];
+      now.textContent = title;
+      widget.load(url, { auto_play: autoPlay, show_user:false, visual:false });
+      // get duration after READY
+      widget.bind(SC.Widget.Events.READY, () => widget.getDuration((d)=>{
+        durationMs = d || 0;
+        seek.max = durationMs || 1000;
+        updateTime(0);
+      }));
+    }
+
+    function updateTime(posMs){
+      time.textContent = `${fmt(posMs)} / ${fmt(durationMs)}`;
+      if (!isSeeking) seek.value = posMs;
+    }
+
+    // Controls
+    document.getElementById('play').onclick = () => widget.play();
+    document.getElementById('pause').onclick = () => widget.pause();
+    document.getElementById('prev').onclick = () => load((current+TRACKS.length-1)%TRACKS.length, true);
+    document.getElementById('next').onclick = () => load((current+1)%TRACKS.length, true);
+
+    document.getElementById('t1').onclick = () => load(0, true);
+    document.getElementById('t2').onclick = () => load(1, true);
+
+    // Seek interactions
+    seek.addEventListener('input', (e)=>{
+      isSeeking = true;
+      const val = parseInt(e.target.value,10)||0;
+      updateTime(val);
+      widget.seekTo(val);
+    });
+    seek.addEventListener('change', ()=>{ isSeeking = false; });
+
+    // Sync progress from widget
+    widget.bind(SC.Widget.Events.PLAY_PROGRESS, (e)=>{
+      if (!durationMs && e.duration){ durationMs = e.duration; seek.max = durationMs; }
+      if (!isSeeking){ updateTime(e.currentPosition); }
+    });
+
+    widget.bind(SC.Widget.Events.FINISH, ()=>{
+      // auto next
+      load((current+1)%TRACKS.length, true);
+    });
+
+    // initial state
+    load(0, false);
+  </script>
+</body>
+</html>
