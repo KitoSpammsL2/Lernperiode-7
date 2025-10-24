@@ -8,7 +8,7 @@ Ich habe vor, eine eigene Musik-Webseite namens WhiteRice zu entwickeln, die Son
 
 <img width="248" height="407" alt="image" src="https://github.com/user-attachments/assets/bf56181f-68d6-4a1f-acc1-bdaf82544f96" />
 
-<img width="702" height="555" alt="image" src="https://github.com/user-attachments/assets/496a9739-c14f-4e4d-b425-ad0b81e43dc2" />
+<img width="702" height="655" alt="image" src="https://github.com/user-attachments/assets/496a9739-c14f-4e4d-b425-ad0b81e43dc2" />
 
 
 Heute habe ich schon ziemlich viel geschafft. Ich habe eine erste Version meiner Musik-Webseite erstellt, auf der aktuell zwei Songs eingebunden sind. Die Basisfunktionen funktionieren bereits: Ich kann die Musik abspielen, pausieren, das Lied fortsetzen und zwischen den Songs hin- und herspringen (skippen). Damit habe ich die Grundlagen meines eigenen Players erfolgreich umgesetzt.
