@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WhiteRice – Player</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="player-wrap">
+    <div class="backbar">
+      <a href="index.html" aria-label="Zurück zur Übersicht">⟵ Zurück</a>
+    </div>
+
+    <section class="nowarea">
+      <img id="bigcover" class="bigcover" alt="Cover" />
+      <div class="trackmeta">
+        <p id="title" class="t">–</p>
+        <p id="artist" class="a">–</p>
+      </div>
+    </section>
+
+    <!-- Spotify-Layout: erst Zeit/Seek, dann Controls -->
+    <section>
+      <!-- Seek oben -->
+      <div class="seek-row">
+        <div id="elapsed" class="time">0:00</div>
+        <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
+        <div id="total" class="time">0:00</div>
+      </div>
+
+      <!-- Controls unten -->
+      <div class="controls-row">
+        <button id="shuffle" class="icon" aria-pressed="false" title="Shuffle">🔀</button>
+        <button id="prev" class="icon" title="Zurück">⏮</button>
+        <button id="playToggle" class="main" title="Play/Pause">▶</button>
+        <button id="next" class="icon" title="Weiter">⏭</button>
+        <span class="spacer"></span>
+      </div>
+    </section>
+  </div>
+
+  <iframe id="sc"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/adrian-gonzalez-659551024/fell-in-luv-playboicarti-1&auto_play=false&show_user=false&visual=false"
+    allow="autoplay"></iframe>
+  <script src="https://w.soundcloud.com/player/api.js"></script>
+  <script defer src="player.js?v=ui-toggle-1"></script>
+</body>
+</html>
