@@ -31,6 +31,26 @@ https://dancing-selkie-3ea80e.netlify.app/
 <img width="606" height="508" alt="image" src="https://github.com/user-attachments/assets/75dda522-1c07-4b9e-a8a5-28f59a7f140e" />
 <img width="309" height="497" alt="image" src="https://github.com/user-attachments/assets/063958c6-9e83-45d6-be96-bb3966891d0e" />
 
+## 7.11
+
+- [ ] Dunkel Hell Modus
+- [ ] Such Leiste
+- [ ] Dynamische „Now Playing“ Animation
+- [ ] Neues Layout
+
+Ich habe in letzter Zeit echt viel geschafft und bin ziemlich zufrieden damit, wie sich meine Seite entwickelt hat. Klar, am Layout will ich noch ein bisschen feilen, aber insgesamt sieht es schon richtig gut aus. Heute habe ich ein paar coole neue Features eingebaut: einen Dunkel-/Hellmodus, mit dem man das Design umschalten kann, eine Suchleiste, um Songs oder Künstler schneller zu finden, und eine dynamische „Now Playing“-Animation, die sich bewegt, wenn Musik läuft. Dadurch wirkt alles viel lebendiger und moderner. Zusammen mit dem neuen Layout fühlt sich das Ganze jetzt schon wie eine kleine Musik-App an. Als Nächstes will ich noch ein paar Details verbessern vielleicht eine Lautstärkeregelung, einen Repeat-Modus oder eine Funktion, um zuletzt gespielte Songs zu speichern.
+
+
+
+<img width="702" height="512" alt="image" src="https://github.com/user-attachments/assets/e2ec1da9-d601-44ad-9b07-96a138fe1843" />
+
+
+## 14.11
+
+- [ ] Lautstärke-Regler + Mute-Button
+- [ ] Repeat-Modus
+- [ ] Zuletzt gehört & „Fortsetzen“
+- [ ] Animiertes, individuelles Hintergrund-Theme pro Artist
 
 
 
