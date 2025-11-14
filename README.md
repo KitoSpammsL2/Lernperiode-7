@@ -33,10 +33,10 @@ https://dancing-selkie-3ea80e.netlify.app/
 
 ## 7.11
 
-- [ ] Dunkel Hell Modus
-- [ ] Such Leiste
-- [ ] Dynamische „Now Playing“ Animation
-- [ ] Neues Layout
+- [x] Dunkel Hell Modus
+- [x] Such Leiste
+- [x] Dynamische „Now Playing“ Animation
+- [x] Neues Layout
 
 Ich habe in letzter Zeit echt viel geschafft und bin ziemlich zufrieden damit, wie sich meine Seite entwickelt hat. Klar, am Layout will ich noch ein bisschen feilen, aber insgesamt sieht es schon richtig gut aus. Heute habe ich ein paar coole neue Features eingebaut: einen Dunkel-/Hellmodus, mit dem man das Design umschalten kann, eine Suchleiste, um Songs oder Künstler schneller zu finden, und eine dynamische „Now Playing“-Animation, die sich bewegt, wenn Musik läuft. Dadurch wirkt alles viel lebendiger und moderner. Zusammen mit dem neuen Layout fühlt sich das Ganze jetzt schon wie eine kleine Musik-App an. Als Nächstes will ich noch ein paar Details verbessern vielleicht eine Lautstärkeregelung, einen Repeat-Modus oder eine Funktion, um zuletzt gespielte Songs zu speichern.
 
@@ -47,11 +47,20 @@ Ich habe in letzter Zeit echt viel geschafft und bin ziemlich zufrieden damit, w
 
 ## 14.11
 
-- [ ] Lautstärke-Regler + Mute-Button
-- [ ] Repeat-Modus
-- [ ] Zuletzt gehört & „Fortsetzen“
-- [ ] Animiertes, individuelles Hintergrund-Theme pro Artist
+Heute habe ich einiges an meiner Webseite weiterentwickelt. Als Erstes habe ich das Layout überarbeitet, sodass der ganze Player-Bereich jetzt sauber symmetrisch aussieht und sowohl auf dem Handy als auch auf dem PC gut passt. Danach habe ich einen Repeat-Bereich eingebaut, mit dem ich Songs oder ganze Playlists wiederholen kann. Außerdem habe ich eine Funktion umgesetzt, die im Hintergrund speichert, welchen Song ich zuletzt gehört habe, inklusive Position, Lautstärke und Einstellungen. Zum Schluss habe ich dafür gesorgt, dass die Musik beim Neuladen automatisch genau dort weitermacht, wo ich aufgehört habe. Dadurch fühlt sich die Seite jetzt deutlich mehr wie eine richtige Musik-App an.
 
+- [x] Automatisches Fortsetzen beim Neuladen
+- [x] Repeat-Modus
+- [x] Speichern der zuletzt gehörten Songs im Hintergrund
+- [x] Alles symetrlich gemacht.
+
+
+## 21.11
+
+- [ ] Lyrics-Bereich hinzufügen
+- [ ] Soft Fade Übergang zwischen Songs
+- [ ] Automatisches Laden von Songs über eine URL-Liste
+- [ ] Design weiterentwickeln (Farb-Hintergründe)
 
 
 ✍️ Heute habe ich... (50-100 Wörter)
