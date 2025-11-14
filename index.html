@@ -52,7 +52,7 @@
   </iframe>
   <script src="https://w.soundcloud.com/player/api.js"></script>
 
-  <!-- VOLLbild-PLAYER als OVERLAY (kein Seitenwechsel) -->
+  <!-- VOLLbild-PLAYER als OVERLAY -->
   <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
     <div class="player-wrap">
       <div class="backbar">
@@ -67,8 +67,8 @@
         </div>
       </section>
 
-      <!-- Spotify-Layout: Seek oben, Controls unten -->
-      <section>
+      <!-- Seek + Controls + Volume -->
+      <section class="bottomarea">
         <div class="seek-row">
           <div id="elapsed" class="time">0:00</div>
           <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
@@ -77,16 +77,24 @@
 
         <div class="controls-row">
           <button id="shuffle" class="icon" aria-pressed="false" title="Shuffle" type="button">🔀</button>
-          <button id="prev" class="icon" title="Zurück" type="button">⏮</button>
-          <button id="playToggle" class="main" title="Play/Pause" type="button">▶</button>
-          <button id="next" class="icon" title="Weiter" type="button">⏭</button>
-          <span class="spacer"></span>
+
+          <div class="main-controls">
+            <button id="prev" class="icon" title="Zurück" type="button">⏮</button>
+            <button id="playToggle" class="main" title="Play/Pause" type="button">▶</button>
+            <button id="next" class="icon" title="Weiter" type="button">⏭</button>
+          </div>
+
+          <button id="repeat" class="icon" title="Repeat" type="button">🔁</button>
+        </div>
+
+        <div class="volume-row">
+          <button id="mute" class="icon mute-btn" title="Stumm" type="button">🔈</button>
+          <input type="range" id="volume" min="0" max="100" value="80" />
         </div>
       </section>
     </div>
   </div>
 
-  <!-- App-Logik -->
-  <script defer src="app.js?v=pro-ux"></script>
+  <script defer src="app.js?v=resume-volume-repeat"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-/* WhiteRice – Pro UX Build: Search + Chips + Theme + Equalizer + Overlay/Mini-Player */
+/* WhiteRice – Pro Build: Search, Theme, Equalizer, Volume, Repeat, Resume */
 
-/* === Trackliste (deine aktuelle Liste) === */
+/* === Trackliste === */
 let TRACKS = [
   // Playboi Carti
   { title: "Playboi Carti – Long Time", url: "https://soundcloud.com/xoxo-beats-10229998/long-time-playboicarti-best" },
@@ -9,7 +9,7 @@ let TRACKS = [
   { title: "Playboi Carti – Molly", url: "https://soundcloud.com/user-330873910/molly-14" },
   { title: "Playboi Carti – Magnolia", url: "https://soundcloud.com/playboicarti/magnolia-1" },
   { title: "Playboi Carti – Whole Lotta Red V3", url: "https://soundcloud.com/1mania/whole-lotta-red-v3" },
-  { title: "Playboi Carti – RIP (Looped Alt Intro)", url: "https://soundcloud.com/cbtheo/playboicarti-rip-looped-alternative-intro" },
+  { title: "Playboi Carti – RIP (Looped Alt Intro)", url: "https://soundcloud.com/cbtheo/playboi-carti-rip-looped-alternative-intro" },
 
   // EsDeeKid
   { title: "EsDeeKid – Tartan", url: "https://soundcloud.com/esdeekid/tartan" },
@@ -65,6 +65,9 @@ const btnShuffle=$("#shuffle");
 const btnPrev  = $("#prev");
 const btnNext  = $("#next");
 const btnToggle= $("#playToggle");
+const repeatBtn= $("#repeat");
+const volumeEl = $("#volume");
+const muteBtn  = $("#mute");
 
 /* Theme */
 const themeToggle = $("#themeToggle");
@@ -81,7 +84,14 @@ let shuffle  = false;
 let order    = [];
 let orderPos = 0;
 let eventsBound = false;
-let activeArtist = "Alle"; // Chip-Filter
+let activeArtist = "Alle";
+let lastSavePos = 0;
+
+/* Volume & Repeat (mit LocalStorage) */
+let volume = parseInt(localStorage.getItem("wr-volume") ?? "80", 10);
+if (isNaN(volume) || volume < 0 || volume > 100) volume = 80;
+let lastNonZeroVolume = volume || 80;
+let repeatMode = localStorage.getItem("wr-repeat") || "off";
 
 /* === Helpers === */
 const splitTitle = full => { const p=full.split("–"); return {artist:(p[0]||"").trim(), title:(p[1]||full).trim()}; };
@@ -96,7 +106,7 @@ async function fetchArtwork(url){
   }catch{ return ""; }
 }
 
-/* === Artists extrahieren & Chips rendern === */
+/* === Artists & Chips === */
 function getArtists(){
   const set = new Set(["Alle"]);
   TRACKS.forEach(t => set.add(splitTitle(t.title).artist || "Unbekannt"));
@@ -154,14 +164,13 @@ function openPlayer(idx=null, auto=false, keepPlaying=false){
 function closePlayer(){
   overlay.classList.add("hidden");
   document.body.style.overflow="";
-  // Playback läuft weiter.
 }
 closeOverlayBtn.onclick = closePlayer;
 
 /* === Mini-Bar Interaktionen === */
 miniBar.addEventListener("click", (e)=>{
-  if (e.target.closest(".mini-btn")) return; // Buttons dürfen eigene Aktion haben
-  openPlayer(current, false, true); // nur öffnen, kein reload
+  if (e.target.closest(".mini-btn")) return;
+  openPlayer(current, false, true);
 });
 miniOpen.onclick   = ()=> openPlayer(current, false, true);
 miniToggle.onclick = ()=> widget.isPaused(p=> p ? widget.play() : widget.pause());
@@ -182,7 +191,7 @@ function makeOrder(){
 function setPlayIcon(paused){
   btnToggle.textContent = paused ? "▶" : "⏸";
   miniToggle.textContent = paused ? "▶" : "⏸";
-  miniBar.classList.toggle("playing", !paused); // Equalizer animieren
+  miniBar.classList.toggle("playing", !paused);
 }
 function setMiniTitle(){
   const {artist,title}=splitTitle(TRACKS[current].title);
@@ -202,26 +211,110 @@ function setMetaFromWidget(){
   });
 }
 
+/* Volume + Mute UI */
+function setMuteIcon(muted){
+  if(!muteBtn) return;
+  muteBtn.textContent = muted ? "🔇" : "🔈";
+}
+
+/* Repeat UI */
+function updateRepeatIcon(){
+  if(!repeatBtn) return;
+  repeatBtn.dataset.mode = repeatMode;
+
+  if (repeatMode === "off") {
+    repeatBtn.textContent = "🔁";
+    repeatBtn.title = "Repeat aus";
+  } else if (repeatMode === "one") {
+    repeatBtn.textContent = "🔂";
+    repeatBtn.title = "Song wiederholen";
+  } else { // "all"
+    repeatBtn.textContent = "🔁";
+    repeatBtn.title = "Playlist wiederholen";
+  }
+}
+
+
 /* === Load / Controls / Seek === */
-function load(idx, auto=false){
+function load(idx, auto=false, startPos=null, shouldPlayOverride=null){
+  if(!inRange(idx)) return;
   current=idx;
   const {url}=TRACKS[current];
+
+  localStorage.setItem("wr-track", String(current));
+
+  widget.unbind(SC.Widget.Events.READY);
   widget.load(url,{auto_play:auto,show_user:false,visual:false});
   widget.bind(SC.Widget.Events.READY, ()=>{
     widget.getDuration(d=>{
       duration=d||0; seekEl.max=duration||1000; totalEl.textContent=fmt(duration); updateTime(0);
     });
+    widget.setVolume(volume);
     setMetaFromWidget();
+
+    if(startPos!==null && !isNaN(startPos)){
+      const p = Math.max(0, startPos);
+      widget.seekTo(p); updateTime(p);
+    }
+    if(shouldPlayOverride === true){
+      widget.play();
+    }else if(shouldPlayOverride === false){
+      widget.pause();
+    }
   });
+
   orderPos=Math.max(0,order.indexOf(current));
 }
 function updateTime(pos){ elapsedEl.textContent=fmt(pos); if(!seeking) seekEl.value=pos; }
 
 /* Buttons */
-btnPrev.onclick   = ()=> prev();
-btnNext.onclick   = ()=> next();
+btnPrev.onclick   = ()=> prev(true);
+btnNext.onclick   = ()=> next(true);
 btnToggle.onclick = ()=> widget.isPaused(p=> p ? widget.play() : widget.pause());
 btnShuffle.onclick= ()=>{ shuffle=!shuffle; btnShuffle.setAttribute("aria-pressed",String(shuffle)); makeOrder(); };
+
+repeatBtn.onclick = ()=>{
+  // Reihenfolge: aus -> one -> all -> aus
+  if (repeatMode === "off") {
+    repeatMode = "one";
+  } else if (repeatMode === "one") {
+    repeatMode = "all";
+  } else {
+    repeatMode = "off";
+  }
+
+  updateRepeatIcon();
+  localStorage.setItem("wr-repeat", repeatMode);
+};
+
+
+/* Volume Events */
+if(volumeEl){
+  volumeEl.value = volume;
+  setMuteIcon(volume===0);
+}
+if(volumeEl && muteBtn){
+  volumeEl.addEventListener("input", e=>{
+    volume = +e.target.value || 0;
+    if(volume>0) lastNonZeroVolume = volume;
+    widget.setVolume(volume);
+    setMuteIcon(volume===0);
+    localStorage.setItem("wr-volume", String(volume));
+  });
+
+  muteBtn.onclick = ()=>{
+    if(volume===0){
+      volume = lastNonZeroVolume || 80;
+    }else{
+      lastNonZeroVolume = volume || 80;
+      volume = 0;
+    }
+    volumeEl.value = volume;
+    widget.setVolume(volume);
+    setMuteIcon(volume===0);
+    localStorage.setItem("wr-volume", String(volume));
+  };
+}
 
 /* Seek robust (Touch+Maus) */
 seekEl.addEventListener("pointerdown", ()=> seeking=true);
@@ -245,15 +338,55 @@ function seekBy(delta){ widget.getPosition(pos=>{ const to=Math.max(0,pos+delta)
   widget.bind(SC.Widget.Events.PLAY_PROGRESS, e=>{
     if(!duration && e.duration){ duration=e.duration; seekEl.max=duration; totalEl.textContent=fmt(duration); }
     if(!seeking) updateTime(e.currentPosition);
+
+    // Progress & Track speichern (für „Fortsetzen“)
+    if(Math.abs(e.currentPosition - lastSavePos) > 2000){
+      lastSavePos = e.currentPosition;
+      localStorage.setItem("wr-pos", String(Math.floor(e.currentPosition)));
+      localStorage.setItem("wr-track", String(current));
+    }
   });
-  widget.bind(SC.Widget.Events.PLAY,  ()=> setPlayIcon(false));
-  widget.bind(SC.Widget.Events.PAUSE, ()=> setPlayIcon(true));
-  widget.bind(SC.Widget.Events.FINISH,()=> next());
+  widget.bind(SC.Widget.Events.PLAY,  ()=>{
+    setPlayIcon(false);
+    localStorage.setItem("wr-playing","1");
+  });
+  widget.bind(SC.Widget.Events.PAUSE, ()=>{
+    setPlayIcon(true);
+    localStorage.setItem("wr-playing","0");
+  });
+  widget.bind(SC.Widget.Events.FINISH,()=> handleFinish());
 })();
 
 /* === Navigation === */
-function next(){ if(order.length===0) makeOrder(); orderPos=(orderPos+1)%order.length; load(order[orderPos], true); }
-function prev(){ if(order.length===0) makeOrder(); orderPos=(orderPos+order.length-1)%order.length; load(order[orderPos], true); }
+function next(autoPlay=true, allowWrap=true){
+  if(order.length===0) makeOrder();
+  let newPos = orderPos + 1;
+  if(newPos >= order.length){
+    if(!allowWrap) return;
+    newPos = 0;
+  }
+  orderPos = newPos;
+  load(order[orderPos], autoPlay);
+}
+function prev(autoPlay=true){
+  if(order.length===0) makeOrder();
+  orderPos = (orderPos + order.length - 1) % order.length;
+  load(order[orderPos], autoPlay);
+}
+
+/* FINISH Verhalten abhängig vom Repeat-Modus */
+function handleFinish(){
+  if(repeatMode === "one"){
+    load(current, true);
+    return;
+  }
+  if(repeatMode === "all"){
+    next(true, true); // mit Wrap
+    return;
+  }
+  // repeat off → nur weiter, wenn nicht am Ende
+  next(true, false);
+}
 
 /* === Suche & Chips Listener === */
 searchEl.addEventListener("input", ()=> renderGrid());
@@ -270,6 +403,23 @@ themeToggle.onclick = ()=>{
   applyTheme();
 };
 
+/* === Fortsetzen: letzten Track + Position wiederherstellen === */
+function restoreLastSession(){
+  const idxStr = localStorage.getItem("wr-track");
+  const posStr = localStorage.getItem("wr-pos");
+  const playing = localStorage.getItem("wr-playing") === "1";
+
+  const idx = idxStr !== null ? parseInt(idxStr,10) : NaN;
+  const pos = posStr !== null ? parseInt(posStr,10) : NaN;
+
+  if(Number.isInteger(idx) && idx>=0 && idx<TRACKS.length){
+    load(idx, false, isNaN(pos)?null:pos, playing);
+  }else{
+    // kein gespeicherter Zustand → erstes Lied, pausiert
+    load(0,false,null,false);
+  }
+}
+
 /* === Start === */
 document.addEventListener("DOMContentLoaded", async ()=>{
   applyTheme();
@@ -278,4 +428,6 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   makeOrder();
   setPlayIcon(true);
   setMiniTitle();
+  updateRepeatIcon();
+  restoreLastSession();
 });
