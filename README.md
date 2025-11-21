@@ -57,10 +57,14 @@ Heute habe ich einiges an meiner Webseite weiterentwickelt. Als Erstes habe ich 
 
 ## 21.11
 
-- [ ] Lyrics-Bereich hinzufügen
-- [ ] Soft Fade Übergang zwischen Songs
-- [ ] Automatisches Laden von Songs über eine URL-Liste
-- [ ] Design weiterentwickeln (Farb-Hintergründe)
+Heute war es ziemlich kompliziert sowohl beim Soft Fade als auch beim Laden von Songs über die URL-Liste. Vor allem der Teil mit den Lyrics war sehr schwierig. Ich habe es immer noch nicht so hinbekommen, wie ich es wollte, und werde nächste Woche noch ein bisschen weiter daran arbeiten. Aber sonst war es heute ein guter Tag.
+
+- [x] Lyrics-Bereich hinzufügen
+- [x] Soft Fade Übergang zwischen Songs
+- [x] Automatisches Laden von Songs über eine URL-Liste
+- [x] Lieder hinzugefügt
+
+
 
 
 ✍️ Heute habe ich... (50-100 Wörter)
