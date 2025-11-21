@@ -64,8 +64,12 @@ Heute war es ziemlich kompliziert sowohl beim Soft Fade als auch beim Laden von 
 - [x] Automatisches Laden von Songs über eine URL-Liste
 - [x] Lieder hinzugefügt
 
+## 28.11
 
-
+- [ ] Mini-Player Animation verbessern
+- [ ] Lyrics-System Anzeige im Player einbauen
+- [ ] Suchleiste optisch verbessern
+- [ ] Mehr Lieder hinzufügen
 
 ✍️ Heute habe ich... (50-100 Wörter)
 
