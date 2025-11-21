@@ -67,7 +67,7 @@
         </div>
       </section>
 
-      <!-- Seek + Controls + Volume -->
+      <!-- Seek + Controls + Volume + Lyrics -->
       <section class="bottomarea">
         <div class="seek-row">
           <div id="elapsed" class="time">0:00</div>
@@ -91,10 +91,18 @@
           <button id="mute" class="icon mute-btn" title="Stumm" type="button">🔈</button>
           <input type="range" id="volume" min="0" max="100" value="80" />
         </div>
+
+        <!-- Lyrics / Notes-Bereich -->
+        <div class="lyrics-wrap">
+          <h3>Lyrics / Notes</h3>
+          <div id="lyricsBox" class="lyrics-box">
+            Keine Lyrics hinterlegt.
+          </div>
+        </div>
       </section>
     </div>
   </div>
 
-  <script defer src="app.js?v=resume-volume-repeat"></script>
+  <script defer src="app.js?v=urls-fade-lyrics"></script>
 </body>
 </html>

@@ -3,47 +3,115 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WhiteRice – Player</title>
+  <meta name="theme-color" content="#0c0d10" />
+  <title>WhiteRice – Übersicht + Player</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="player-wrap">
-    <div class="backbar">
-      <a href="index.html" aria-label="Zurück zur Übersicht">⟵ Zurück</a>
+  <!-- Header -->
+  <header class="site-head">
+    <div class="head-row">
+      <h1 class="title">WhiteRice</h1>
+      <button id="themeToggle" class="theme-btn" title="Dark/Light umschalten">🌙</button>
+    </div>
+    <p class="sub">Suche · Filter · Mini-Player · Vollbild-Player (Playback bleibt)</p>
+
+    <div class="search-wrap">
+      <input
+        type="text"
+        id="search"
+        class="search"
+        placeholder="Suche nach Song oder Künstler …"
+        autocomplete="off"
+      />
     </div>
 
-    <section class="nowarea">
-      <img id="bigcover" class="bigcover" alt="Cover" />
-      <div class="trackmeta">
-        <p id="title" class="t">–</p>
-        <p id="artist" class="a">–</p>
-      </div>
-    </section>
+    <!-- Artist-Chips (per JS) -->
+    <div id="chips" class="chips"></div>
+  </header>
 
-    <!-- Spotify-Layout: erst Zeit/Seek, dann Controls -->
-    <section>
-      <!-- Seek oben -->
-      <div class="seek-row">
-        <div id="elapsed" class="time">0:00</div>
-        <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
-        <div id="total" class="time">0:00</div>
-      </div>
+  <!-- GRID (Startseite) -->
+  <main class="grid-wrap">
+    <div id="grid" class="cover-grid"><!-- Cards via JS --></div>
+  </main>
 
-      <!-- Controls unten -->
-      <div class="controls-row">
-        <button id="shuffle" class="icon" aria-pressed="false" title="Shuffle">🔀</button>
-        <button id="prev" class="icon" title="Zurück">⏮</button>
-        <button id="playToggle" class="main" title="Play/Pause">▶</button>
-        <button id="next" class="icon" title="Weiter">⏭</button>
-        <span class="spacer"></span>
-      </div>
-    </section>
+  <!-- MINI-PLAYER (Footer) – klick auf Leiste öffnet Overlay -->
+  <div id="minibar" class="mini-bar" role="button" aria-label="Player öffnen">
+    <img id="miniCover" class="mini-cover" alt="Cover" />
+    <button id="miniToggle" class="mini-btn" title="Play/Pause" type="button">▶</button>
+    <div class="mini-info" id="miniInfo">–</div>
+
+    <!-- Equalizer-Animation (wenn playing) -->
+    <div class="eq" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="mini-spacer"></div>
+    <button id="miniOpen" class="mini-btn" title="Großer Player" type="button">⬆</button>
   </div>
 
-  <iframe id="sc"
+  <!-- PERSISTENTES SOUNDcloud-WIDGET (unsichtbar, bleibt im DOM) -->
+  <iframe
+    id="sc"
     src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/adrian-gonzalez-659551024/fell-in-luv-playboicarti-1&auto_play=false&show_user=false&visual=false"
-    allow="autoplay"></iframe>
+    allow="autoplay">
+  </iframe>
   <script src="https://w.soundcloud.com/player/api.js"></script>
-  <script defer src="player.js?v=ui-toggle-1"></script>
+
+  <!-- VOLLbild-PLAYER als OVERLAY -->
+  <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
+    <div class="player-wrap">
+      <div class="backbar">
+        <button id="closeOverlay" class="backbtn" aria-label="Zurück zur Übersicht" type="button">⟵ Zurück</button>
+      </div>
+
+      <section class="nowarea">
+        <img id="bigcover" class="bigcover" alt="Cover" />
+        <div class="trackmeta">
+          <p id="title" class="t">–</p>
+          <p id="artist" class="a">–</p>
+        </div>
+      </section>
+
+      <section class="bottomarea">
+        <!-- Seek -->
+        <div class="seek-row">
+          <div id="elapsed" class="time">0:00</div>
+          <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
+          <div id="total" class="time">0:00</div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-row">
+          <button id="shuffle" class="icon" aria-pressed="false" title="Shuffle" type="button">🔀</button>
+
+          <div class="main-controls">
+            <button id="prev" class="icon" title="Zurück" type="button">⏮</button>
+            <button id="playToggle" class="main" title="Play/Pause" type="button">▶</button>
+            <button id="next" class="icon" title="Weiter" type="button">⏭</button>
+          </div>
+
+          <button id="repeat" class="icon" title="Repeat" type="button">🔁</button>
+        </div>
+
+        <!-- Lautstärke -->
+        <div class="volume-row">
+          <button id="mute" class="icon mute-btn" title="Stumm" type="button">🔈</button>
+          <input type="range" id="volume" min="0" max="100" value="80" />
+        </div>
+
+        <!-- Lyrics / Notes -->
+        <div class="lyrics-wrap">
+          <h3>Lyrics / Notes</h3>
+          <div id="lyricsBox" class="lyrics-box">
+            Keine Lyrics hinterlegt.
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- deine Logik -->
+  <script defer src="app.js"></script>
 </body>
 </html>

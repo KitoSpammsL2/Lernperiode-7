@@ -1,7 +1,7 @@
-/* WhiteRice – Pro Build: Search, Theme, Equalizer, Volume, Repeat, Resume */
+/* WhiteRice – manuelle Titel, Search, Theme, Equalizer, Volume, Repeat, Resume, Lyrics, Soft-Fade */
 
-/* === Trackliste === */
-let TRACKS = [
+/* === Trackliste: saubere Namen von dir === */
+const TRACKS = [
   // Playboi Carti
   { title: "Playboi Carti – Long Time", url: "https://soundcloud.com/xoxo-beats-10229998/long-time-playboicarti-best" },
   { title: "Playboi Carti – Location", url: "https://soundcloud.com/user-584825425/playboi-carti-location-official-audio-3" },
@@ -9,7 +9,7 @@ let TRACKS = [
   { title: "Playboi Carti – Molly", url: "https://soundcloud.com/user-330873910/molly-14" },
   { title: "Playboi Carti – Magnolia", url: "https://soundcloud.com/playboicarti/magnolia-1" },
   { title: "Playboi Carti – Whole Lotta Red V3", url: "https://soundcloud.com/1mania/whole-lotta-red-v3" },
-  { title: "Playboi Carti – RIP (Looped Alt Intro)", url: "https://soundcloud.com/cbtheo/playboi-carti-rip-looped-alternative-intro" },
+  { title: "Playboi Carti – RIP (Looped Alt Intro)", url: "https://soundcloud.com/cbtheo/playboicarti-rip-looped-alternative-intro" },
 
   // EsDeeKid
   { title: "EsDeeKid – Tartan", url: "https://soundcloud.com/esdeekid/tartan" },
@@ -33,11 +33,19 @@ let TRACKS = [
   { title: "Buckshot & FakeMink – Fever", url: "https://soundcloud.com/buckshottt/buckshot-fakemink-fever" },
 
   // A$AP Rocky / NIGO
-  { title: "A$AP Rocky – F**kin Problems", url: "https://soundcloud.com/asvpxrocky/f-kin-problems" },
-  { title: "A$AP Rocky – Feat. Jessica Pratt", url: "https://soundcloud.com/asvpxrocky/a-ap-rocky-feat-jessica-pratt" },
-  { title: "A$AP Rocky – Babushka Boi", url: "https://soundcloud.com/6cv/aap-rocky-babushka-boi" },
-  { title: "NIGO – ARYA (feat. A$AP Rocky)", url: "https://soundcloud.com/nigo-music/arya" }
+  { title: "ASAP Rocky – F**kin Problems", url: "https://soundcloud.com/asvpxrocky/f-kin-problems" },
+  { title: "ASAP Rocky – Feat. Jessica Pratt", url: "https://soundcloud.com/asvpxrocky/a-ap-rocky-feat-jessica-pratt" },
+  { title: "ASAP Rocky – Babushka Boi", url: "https://soundcloud.com/6cv/aap-rocky-babushka-boi" },
+  { title: "NIGO – ARYA (feat. ASAP Rocky)", url: "https://soundcloud.com/nigo-music/arya" }
 ];
+
+/* === Lyrics / Notes – hier kannst du pro Song Text eintragen === */
+/* Wichtig: keine kompletten copyrighted Songtexte, lieber eigene Notizen / kurze Stellen. */
+const LYRICS = {
+  "Playboi Carti – Molly": "Hier kannst du deine eigenen Notizen oder einzelne Lines zu „Molly“ eintragen. z.B. Stimmung, Lieblingsstelle, eigene Interpretation."
+  // Beispiel für weiteren Song:
+  // "EsDeeKid – LV Sandals": "Kurze Beschreibung oder eigene Zeilen zu diesem Track…"
+};
 
 /* === Shortcuts === */
 const $ = q => document.querySelector(q);
@@ -68,6 +76,7 @@ const btnToggle= $("#playToggle");
 const repeatBtn= $("#repeat");
 const volumeEl = $("#volume");
 const muteBtn  = $("#mute");
+const lyricsBox= $("#lyricsBox");
 
 /* Theme */
 const themeToggle = $("#themeToggle");
@@ -94,7 +103,10 @@ let lastNonZeroVolume = volume || 80;
 let repeatMode = localStorage.getItem("wr-repeat") || "off";
 
 /* === Helpers === */
-const splitTitle = full => { const p=full.split("–"); return {artist:(p[0]||"").trim(), title:(p[1]||full).trim()}; };
+const splitTitle = full => {
+  const p=full.split("–");
+  return {artist:(p[0]||"").trim(), title:(p[1]||full).trim()};
+};
 const fmt = ms => { const s=Math.max(0,Math.floor(ms/1000)); return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`; };
 const inRange = i => i>=0 && i<TRACKS.length;
 
@@ -104,6 +116,29 @@ async function fetchArtwork(url){
     const d = await r.json();
     return d.thumbnail_url || "";
   }catch{ return ""; }
+}
+
+/* Fade-Helfer für weiche Übergänge */
+function fadeVolume(target, duration, callback){
+  const steps = 15;
+  const startVol = volume;
+  const delta = target - startVol;
+  let currentStep = 0;
+
+  const interval = setInterval(() => {
+    currentStep++;
+    const t = currentStep / steps;
+    const v = Math.round(startVol + delta * t);
+    volume = Math.max(0, Math.min(100, v));
+    widget.setVolume(volume);
+    if (volumeEl) volumeEl.value = volume;
+    setMuteIcon(volume===0);
+
+    if (currentStep >= steps){
+      clearInterval(interval);
+      if (callback) callback();
+    }
+  }, duration / steps);
 }
 
 /* === Artists & Chips === */
@@ -140,7 +175,13 @@ async function renderGrid(){
     if(!artistPass || !searchPass) continue;
 
     const card=document.createElement("div"); card.className="card";
-    const img=document.createElement("img"); img.src=(await fetchArtwork(t.url)) || "https://picsum.photos/300";
+
+    const img=document.createElement("img");
+    img.src="https://picsum.photos/300?random="+i; // Fallback
+    fetchArtwork(t.url).then(art=>{
+      if(art) img.src = art;
+    });
+
     const meta=document.createElement("div"); meta.className="meta";
     const tEl=document.createElement("p"); tEl.className="title"; tEl.textContent=title;
     const aEl=document.createElement("p"); aEl.className="artist"; aEl.textContent=artist;
@@ -197,12 +238,21 @@ function setMiniTitle(){
   const {artist,title}=splitTitle(TRACKS[current].title);
   miniInfo.textContent = `${title} — ${artist}`;
 }
+function updateLyricsBox(){
+  if(!lyricsBox) return;
+  const key = TRACKS[current].title;
+  lyricsBox.textContent = LYRICS[key] || "Keine Lyrics hinterlegt.";
+}
 function setMetaFromWidget(){
+  const {artist,title}=splitTitle(TRACKS[current].title);
+  titleEl.textContent=title;
+  artistEl.textContent=artist;
+  setMiniTitle();
+  updateLyricsBox();
+
   widget.getCurrentSound(async (s)=>{
-    const {artist,title}=splitTitle(TRACKS[current].title);
-    titleEl.textContent=title; artistEl.textContent=artist; setMiniTitle();
     let art=(s && (s.artwork_url || (s.user && s.user.avatar_url))) || "";
-    if(!art) art=await fetchArtwork(TRACKS[current].url);
+    if(!art) art = await fetchArtwork(TRACKS[current].url);
     if(art){
       const big = art.replace("large","t500x500");
       bigcover.src = big;
@@ -233,7 +283,6 @@ function updateRepeatIcon(){
     repeatBtn.title = "Playlist wiederholen";
   }
 }
-
 
 /* === Load / Controls / Seek === */
 function load(idx, auto=false, startPos=null, shouldPlayOverride=null){
@@ -268,13 +317,12 @@ function load(idx, auto=false, startPos=null, shouldPlayOverride=null){
 function updateTime(pos){ elapsedEl.textContent=fmt(pos); if(!seeking) seekEl.value=pos; }
 
 /* Buttons */
-btnPrev.onclick   = ()=> prev(true);
-btnNext.onclick   = ()=> next(true);
+btnPrev.onclick   = ()=> prev(true,true);
+btnNext.onclick   = ()=> next(true,true);
 btnToggle.onclick = ()=> widget.isPaused(p=> p ? widget.play() : widget.pause());
 btnShuffle.onclick= ()=>{ shuffle=!shuffle; btnShuffle.setAttribute("aria-pressed",String(shuffle)); makeOrder(); };
 
 repeatBtn.onclick = ()=>{
-  // Reihenfolge: aus -> one -> all -> aus
   if (repeatMode === "off") {
     repeatMode = "one";
   } else if (repeatMode === "one") {
@@ -282,11 +330,9 @@ repeatBtn.onclick = ()=>{
   } else {
     repeatMode = "off";
   }
-
   updateRepeatIcon();
   localStorage.setItem("wr-repeat", repeatMode);
 };
-
 
 /* Volume Events */
 if(volumeEl){
@@ -339,7 +385,6 @@ function seekBy(delta){ widget.getPosition(pos=>{ const to=Math.max(0,pos+delta)
     if(!duration && e.duration){ duration=e.duration; seekEl.max=duration; totalEl.textContent=fmt(duration); }
     if(!seeking) updateTime(e.currentPosition);
 
-    // Progress & Track speichern (für „Fortsetzen“)
     if(Math.abs(e.currentPosition - lastSavePos) > 2000){
       lastSavePos = e.currentPosition;
       localStorage.setItem("wr-pos", String(Math.floor(e.currentPosition)));
@@ -357,35 +402,55 @@ function seekBy(delta){ widget.getPosition(pos=>{ const to=Math.max(0,pos+delta)
   widget.bind(SC.Widget.Events.FINISH,()=> handleFinish());
 })();
 
-/* === Navigation === */
-function next(autoPlay=true, allowWrap=true){
+/* === Navigation mit Soft-Fade === */
+function next(autoPlay=true, withFade=true, allowWrap=true){
   if(order.length===0) makeOrder();
-  let newPos = orderPos + 1;
-  if(newPos >= order.length){
-    if(!allowWrap) return;
-    newPos = 0;
+
+  const doSwitch = ()=>{
+    let newPos = orderPos + 1;
+    if(newPos >= order.length){
+      if(!allowWrap) return;
+      newPos = 0;
+    }
+    orderPos = newPos;
+    load(order[orderPos], autoPlay);
+    fadeVolume(lastNonZeroVolume || 80, 250);
+  };
+
+  if(withFade){
+    fadeVolume(0, 250, doSwitch);
+  }else{
+    doSwitch();
   }
-  orderPos = newPos;
-  load(order[orderPos], autoPlay);
 }
-function prev(autoPlay=true){
+function prev(autoPlay=true, withFade=true){
   if(order.length===0) makeOrder();
-  orderPos = (orderPos + order.length - 1) % order.length;
-  load(order[orderPos], autoPlay);
+
+  const doSwitch = ()=>{
+    orderPos = (orderPos + order.length - 1) % order.length;
+    load(order[orderPos], autoPlay);
+    fadeVolume(lastNonZeroVolume || 80, 250);
+  };
+
+  if(withFade){
+    fadeVolume(0, 250, doSwitch);
+  }else{
+    doSwitch();
+  }
 }
 
 /* FINISH Verhalten abhängig vom Repeat-Modus */
 function handleFinish(){
   if(repeatMode === "one"){
     load(current, true);
+    fadeVolume(lastNonZeroVolume || 80, 250);
     return;
   }
   if(repeatMode === "all"){
-    next(true, true); // mit Wrap
+    next(true,false,true);
     return;
   }
-  // repeat off → nur weiter, wenn nicht am Ende
-  next(true, false);
+  next(true,false,false);
 }
 
 /* === Suche & Chips Listener === */
@@ -415,7 +480,6 @@ function restoreLastSession(){
   if(Number.isInteger(idx) && idx>=0 && idx<TRACKS.length){
     load(idx, false, isNaN(pos)?null:pos, playing);
   }else{
-    // kein gespeicherter Zustand → erstes Lied, pausiert
     load(0,false,null,false);
   }
 }
@@ -426,8 +490,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   renderChips();
   await renderGrid();
   makeOrder();
-  setPlayIcon(true);
-  setMiniTitle();
   updateRepeatIcon();
+  if(volumeEl){ volumeEl.value = volume; setMuteIcon(volume===0); }
   restoreLastSession();
 });

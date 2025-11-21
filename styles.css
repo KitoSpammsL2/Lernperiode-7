@@ -292,6 +292,27 @@ body.light #volume{background:#e7ebf2;border-color:#dfe5ee}
   box-shadow:0 1px 4px var(--shadow);
 }
 
+/* Lyrics / Notes */
+.lyrics-wrap{
+  width:min(420px,92vw);
+  max-height:180px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:var(--chip);
+  overflow:auto;
+}
+.lyrics-wrap h3{
+  margin:0 0 6px;
+  font-size:14px;
+  color:var(--muted);
+}
+.lyrics-box{
+  font-size:13px;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+
 /* MINI-PLAYER (Footer) */
 .mini-bar{
   position: fixed; left: 10px; right: 10px; bottom: 10px;
