@@ -74,40 +74,43 @@
       </section>
 
       <section class="bottomarea">
-        <!-- Seek -->
-        <div class="seek-row">
-          <div id="elapsed" class="time">0:00</div>
-          <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
-          <div id="total" class="time">0:00</div>
-        </div>
+  <!-- Seek -->
+  <div class="seek-row">
+    <div id="elapsed" class="time">0:00</div>
+    <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
+    <div id="total" class="time">0:00</div>
+  </div>
 
-        <!-- Controls -->
-        <div class="controls-row">
-          <button id="shuffle" class="icon" aria-pressed="false" title="Shuffle" type="button">🔀</button>
+  <!-- Controls + Lyrics-Button -->
+  <div class="controls-row">
+    <button id="shuffle" class="icon" aria-pressed="false" title="Shuffle" type="button">🔀</button>
+    <button id="lyricsToggle" class="icon" title="Lyrics anzeigen" type="button">♪</button>
 
-          <div class="main-controls">
-            <button id="prev" class="icon" title="Zurück" type="button">⏮</button>
-            <button id="playToggle" class="main" title="Play/Pause" type="button">▶</button>
-            <button id="next" class="icon" title="Weiter" type="button">⏭</button>
-          </div>
+    <div class="main-controls">
+      <button id="prev" class="icon" title="Zurück" type="button">⏮</button>
+      <button id="playToggle" class="main" title="Play/Pause" type="button">▶</button>
+      <button id="next" class="icon" title="Weiter" type="button">⏭</button>
+    </div>
 
-          <button id="repeat" class="icon" title="Repeat" type="button">🔁</button>
-        </div>
+    <button id="repeat" class="icon" title="Repeat" type="button">🔁</button>
+  </div>
 
-        <!-- Lautstärke -->
-        <div class="volume-row">
-          <button id="mute" class="icon mute-btn" title="Stumm" type="button">🔈</button>
-          <input type="range" id="volume" min="0" max="100" value="80" />
-        </div>
+  <!-- KEINE Lautstärke-Leiste mehr -->
 
-        <!-- Lyrics / Notes -->
-        <div class="lyrics-wrap">
-          <h3>Lyrics / Notes</h3>
-          <div id="lyricsBox" class="lyrics-box">
-            Keine Lyrics hinterlegt.
-          </div>
-        </div>
-      </section>
+  <!-- Lyrics-Panel zum Scrollen -->
+  <div id="lyricsPanel" class="lyrics-panel hidden">
+    <div class="lyrics-panel-inner">
+      <h3>Lyrics / Notes</h3>
+      <div id="lyricsScroll" class="lyrics-scroll">
+        Keine Lyrics hinterlegt.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
     </div>
   </div>
 

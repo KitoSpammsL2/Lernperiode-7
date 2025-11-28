@@ -16,11 +16,18 @@
     </div>
     <p class="sub">Suche · Filter · Mini-Player · Vollbild-Player (Playback bleibt)</p>
 
+    <!-- Suche -->
     <div class="search-wrap">
-      <input type="text" id="search" class="search" placeholder="Suche nach Song oder Künstler …" autocomplete="off" />
+      <input
+        type="text"
+        id="search"
+        class="search"
+        placeholder="Suche nach Song oder Künstler …"
+        autocomplete="off"
+      />
     </div>
 
-    <!-- Artist-Chips (per JS) -->
+    <!-- Artist-Chips -->
     <div id="chips" class="chips"></div>
   </header>
 
@@ -29,22 +36,23 @@
     <div id="grid" class="cover-grid"><!-- Cards via JS --></div>
   </main>
 
-  <!-- MINI-PLAYER (Footer) – klick auf Leiste öffnet Overlay -->
+  <!-- MINI-PLAYER (Footer) -->
   <div id="minibar" class="mini-bar" role="button" aria-label="Player öffnen">
     <img id="miniCover" class="mini-cover" alt="Cover" />
-    <button id="miniToggle" class="mini-btn" title="Play/Pause" type="button">▶</button>
-    <div class="mini-info" id="miniInfo">–</div>
+    <div class="mini-main">
+      <button id="miniToggle" class="mini-btn" title="Play/Pause" type="button">▶</button>
+      <div class="mini-info" id="miniInfo">–</div>
+    </div>
 
-    <!-- Equalizer-Animation (wenn playing) -->
+    <!-- Equalizer -->
     <div class="eq" aria-hidden="true">
       <span></span><span></span><span></span>
     </div>
 
-    <div class="mini-spacer"></div>
-    <button id="miniOpen" class="mini-btn" title="Großer Player" type="button">⬆</button>
+    <button id="miniOpen" class="mini-btn mini-open" title="Großer Player" type="button">⬆</button>
   </div>
 
-  <!-- PERSISTENTES SOUNDcloud-WIDGET (unsichtbar, bleibt im DOM) -->
+  <!-- SoundCloud-Widget (unsichtbar) -->
   <iframe
     id="sc"
     src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/adrian-gonzalez-659551024/fell-in-luv-playboicarti-1&auto_play=false&show_user=false&visual=false"
@@ -67,42 +75,43 @@
         </div>
       </section>
 
-      <!-- Seek + Controls + Volume + Lyrics -->
       <section class="bottomarea">
-        <div class="seek-row">
-          <div id="elapsed" class="time">0:00</div>
-          <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
-          <div id="total" class="time">0:00</div>
-        </div>
+  <!-- Seek -->
+  <div class="seek-row">
+    <div id="elapsed" class="time">0:00</div>
+    <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
+    <div id="total" class="time">0:00</div>
+  </div>
 
-        <div class="controls-row">
-          <button id="shuffle" class="icon" aria-pressed="false" title="Shuffle" type="button">🔀</button>
+  <!-- Controls + Lyrics-Button -->
+  <div class="controls-row">
+    <button id="shuffle" class="icon" aria-pressed="false" title="Shuffle" type="button">🔀</button>
+    <button id="lyricsToggle" class="icon" title="Lyrics anzeigen" type="button">♪</button>
 
-          <div class="main-controls">
-            <button id="prev" class="icon" title="Zurück" type="button">⏮</button>
-            <button id="playToggle" class="main" title="Play/Pause" type="button">▶</button>
-            <button id="next" class="icon" title="Weiter" type="button">⏭</button>
-          </div>
+    <div class="main-controls">
+      <button id="prev" class="icon" title="Zurück" type="button">⏮</button>
+      <button id="playToggle" class="main" title="Play/Pause" type="button">▶</button>
+      <button id="next" class="icon" title="Weiter" type="button">⏭</button>
+    </div>
 
-          <button id="repeat" class="icon" title="Repeat" type="button">🔁</button>
-        </div>
+    <button id="repeat" class="icon" title="Repeat" type="button">🔁</button>
+  </div>
 
-        <div class="volume-row">
-          <button id="mute" class="icon mute-btn" title="Stumm" type="button">🔈</button>
-          <input type="range" id="volume" min="0" max="100" value="80" />
-        </div>
+  <!-- KEINE Lautstärke-Leiste mehr -->
 
-        <!-- Lyrics / Notes-Bereich -->
-        <div class="lyrics-wrap">
-          <h3>Lyrics / Notes</h3>
-          <div id="lyricsBox" class="lyrics-box">
-            Keine Lyrics hinterlegt.
-          </div>
-        </div>
-      </section>
+  <!-- Lyrics-Panel zum Scrollen -->
+  <div id="lyricsPanel" class="lyrics-panel hidden">
+    <div class="lyrics-panel-inner">
+      <h3>Lyrics / Notes</h3>
+      <div id="lyricsScroll" class="lyrics-scroll">
+        Keine Lyrics hinterlegt.
+      </div>
+    </div>
+  </div>
+</section>
     </div>
   </div>
 
-  <script defer src="app.js?v=urls-fade-lyrics"></script>
+  <script defer src="app.js"></script>
 </body>
 </html>
