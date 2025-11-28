@@ -66,10 +66,20 @@ Heute war es ziemlich kompliziert sowohl beim Soft Fade als auch beim Laden von 
 
 ## 28.11
 
-- [ ] Mini-Player Animation verbessern
-- [ ] Lyrics-System Anzeige im Player einbauen
-- [ ] Suchleiste optisch verbessern
-- [ ] Mehr Lieder hinzufügen
+- [x] Mini-Player Animation verbessern
+- [x] Lyrics-System Anzeige im Player einbauen
+- [x] Suchleiste optisch verbessern
+- [x] Mehr Lieder hinzufügen
+
+Ich habe es fast geschafft die lyrics hinzuzufügen ich habe jetzt einen button der ein kleinen text anzeigt aber ich öchte es noch schöner gestallten ich möchte es wie bei spotify das es so schön ist und ich möchte das das timing von den lyrics so ist wie beim lied. 
+
+
+## 5.12
+
+- [ ] Timing vom Lied zu den lyrics
+- [ ] Animationen besser machen von den Lyrics
+- [ ] Von mehr Liedern die Lyrics hinzufügen
+- [ ] Mehr Lieder hinzufügen.
 
 ✍️ Heute habe ich... (50-100 Wörter)
 
