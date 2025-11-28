@@ -71,7 +71,7 @@ Heute war es ziemlich kompliziert sowohl beim Soft Fade als auch beim Laden von 
 - [x] Suchleiste optisch verbessern
 - [x] Mehr Lieder hinzufügen
 
-Ich habe es fast geschafft die lyrics hinzuzufügen ich habe jetzt einen button der ein kleinen text anzeigt aber ich öchte es noch schöner gestallten ich möchte es wie bei spotify das es so schön ist und ich möchte das das timing von den lyrics so ist wie beim lied. 
+Ich habe es fast geschafft, die Lyrics einzubauen. Momentan habe ich einen Button, der einen kleinen Text anzeigt, aber ich möchte das Ganze noch viel schöner gestalten – am liebsten so wie bei Spotify, wo alles richtig sauber aussieht. Außerdem will ich, dass die Lyrics perfekt zum Timing des Songs passen und sich synchron mit dem Lied bewegen.
 
 
 ## 5.12
