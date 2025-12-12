@@ -90,7 +90,7 @@ Das Thema Lyrics ist viel aufwendiger, als ich am Anfang gedacht habe, und ich g
 
 - [ ] Hover-Effekte verfeinern
 - [ ] Bessere Rückmeldung bei Aktionen
-- [ ] Feinschliff bei Schriftgrößen und Abständen
+- [ ] Feinschliff bei Schriftgrössen und Abständen
 
 
 ✍️ Heute habe ich... (50-100 Wörter)
