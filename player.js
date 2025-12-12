@@ -45,10 +45,101 @@ const TRACKS = [
 /* === Lyrics / Notes – hier trägst du deinen Text ein === */
 /* Bitte keine kompletten originalen Songtexte, lieber eigene Notizen. */
 const LYRICS = {
-  "Playboi Carti – Molly":
-    "Meine Notizen zu „Molly“:\n- sehr energiegeladen, typischer Carti-Vibe\n- funktioniert gut zusammen mit „Magnolia“\n\nHier kannst du eigene Gedanken, Stimmung oder einzelne Lines in eigenen Worten aufschreiben."
-  // Beispiel: weitere Songs
-  // "EsDeeKid – LV Sandals": "Eigene Notizen…"
+  "Playboi Carti – Molly": `
+    Look at these diamonds they shinin
+Look at these bitches they lyin
+Baby these diamonds not Johnny
+I just called up Avianne
+I dont got no stylist
+All my planes are privates
+Perkys on the privates
+We dont fuck with molly
+We had to lay back on them pills
+I just fucked the pint up
+Im finna settle in your field
+Get slimed lil bitch I know you not real
+Ima spend my money on guns and pills
+In Atlanta with a bitch and the bitch so bad
+Im on the that lean lil bitch
+Kick the bitch out I dont need the bitch
+Look at these diamonds they shinin
+Look at these bitches they lyin
+Baby these diamonds not Johnny
+I just called up Avianne
+I dont got no stylist
+All my planes are privates
+Perkys on the privates
+We dont fuck with molly
+We had to lay back on them pills
+I just fucked the pint up
+Im finna settle in your field
+Get slimed lil bitch I know you not real
+Ima spend my money on guns and pills
+In Atlanta with a bitch and the bitch so bad
+Im on the that lean lil bitch
+Kick the bitch out I dont need the bitch
+Look at these diamonds they shinin
+Look at these bitches they lyin
+Baby these diamonds not Johnny
+I just called up Avianne
+I dont got no stylist
+All my planes are privates
+Perkys on the privates
+We dont fuck with molly
+We had to lay back on them pills
+I just fucked the pint up
+Im finna settle in your field
+Get slimed lil bitch I know you not real
+Ima spend my money on guns and pills
+In Atlanta with a bitch and the bitch so bad
+Im on the that lean lil bitch
+Kick the bitch out I dont need the bitch
+Im from the Flat lil nigga
+We started trappin nigga
+We started rappin nigga
+These all black diamonds nigga
+Hang out with robbers nigga
+What you know about robbin niggas
+What you know about TECs
+What you know about mobbin nigga
+Look at these diamonds they shinin
+Look at these bitches they lyin
+Baby these diamonds not Johnny
+I just called up Avianne
+I dont got no stylist
+All my planes are privates
+Perkys on the privates
+We dont fuck with molly
+We had to lay back on them pills
+I just fucked the pint up
+Im finna settle in your field
+Get slimed lil bitch I know you not real
+Ima spend my money on guns and pills
+In Atlanta with a bitch and the bitch so bad
+Im on the that lean lil bitch
+Kick the bitch out I dont need the bitch
+Look at these diamonds they shinin
+Look at these bitches they lyin
+Baby these diamonds not Johnny
+I just called up Avianne
+I dont got no stylist
+All my planes are privates
+Perkys on the privates
+We dont fuck with molly
+We had to lay back on them pills
+I just fucked the pint up
+Im finna settle in your field
+Get slimed lil bitch I know you not real
+Im spendin my money on guns and pills
+In Atlanta with a bitch and the bitch so bad
+Im on the that lean lil bitch
+Kick the bitch out I dont need the bitch
+  `,
+  
+  // Beispiel für weitere Songs:
+  // "EsDeeKid – LV Sandals": `
+  //   Deine Notizen oder umgeschriebener Text…
+  // `,
 };
 
 /* === DOM-Shortcuts === */

@@ -3,115 +3,97 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0c0d10" />
-  <title>WhiteRice – Übersicht + Player</title>
+  <title>WhiteRice</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-head">
-    <div class="head-row">
-      <h1 class="title">WhiteRice</h1>
-      <button id="themeToggle" class="theme-btn" title="Dark/Light umschalten">🌙</button>
-    </div>
-    <p class="sub">Suche · Filter · Mini-Player · Vollbild-Player (Playback bleibt)</p>
-
-    <!-- Suche -->
-    <div class="search-wrap">
-      <input
-        type="text"
-        id="search"
-        class="search"
-        placeholder="Suche nach Song oder Künstler …"
-        autocomplete="off"
-      />
+  <header class="topbar">
+    <div class="brand">
+      <h1>WhiteRice</h1>
+      <p>Suche · Filter · Mini-Player · Vollbild-Player (Playback bleibt)</p>
     </div>
 
-    <!-- Artist-Chips -->
-    <div id="chips" class="chips"></div>
+    <button id="themeBtn" class="theme-btn" title="Dark/Light" type="button">🌙</button>
   </header>
 
-  <!-- GRID (Startseite) -->
-  <main class="grid-wrap">
-    <div id="grid" class="cover-grid"><!-- Cards via JS --></div>
+  <main class="page">
+    <div class="searchwrap">
+      <div class="search">
+        <span class="search-icon">🔎</span>
+        <input id="search" type="text" placeholder="Suche nach Song oder Künstler …" autocomplete="off" />
+      </div>
+    </div>
+
+    <div id="chips" class="chips"></div>
+
+    <section class="grid-wrap">
+      <div id="grid" class="cover-grid"></div>
+    </section>
   </main>
 
-  <!-- MINI-PLAYER (Footer) -->
-  <div id="minibar" class="mini-bar" role="button" aria-label="Player öffnen">
-    <img id="miniCover" class="mini-cover" alt="Cover" />
-    <div class="mini-main">
-      <button id="miniToggle" class="mini-btn" title="Play/Pause" type="button">▶</button>
-      <div class="mini-info" id="miniInfo">–</div>
-    </div>
-
-    <!-- Equalizer -->
-    <div class="eq" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </div>
-
-    <button id="miniOpen" class="mini-btn mini-open" title="Großer Player" type="button">⬆</button>
-  </div>
-
-  <!-- SoundCloud-Widget (unsichtbar) -->
+  <!-- SoundCloud Widget (unsichtbar, bleibt immer aktiv) -->
   <iframe
     id="sc"
-    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/adrian-gonzalez-659551024/fell-in-luv-playboicarti-1&auto_play=false&show_user=false&visual=false"
-    allow="autoplay">
-  </iframe>
+    title="SoundCloud Player"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/user-330873910/molly-14&auto_play=false&show_user=false&visual=false"
+    allow="autoplay"
+  ></iframe>
   <script src="https://w.soundcloud.com/player/api.js"></script>
 
-  <!-- VOLLbild-PLAYER als OVERLAY -->
+  <!-- Mini Player (unten, immer sichtbar) -->
+  <footer id="mini" class="mini">
+    <button id="miniPlay" class="mini-play" type="button" aria-label="Play/Pause">▶</button>
+    <img id="miniCover" class="mini-cover" alt="" />
+    <div class="mini-meta">
+      <div id="miniTitle" class="mini-title">–</div>
+      <div id="miniArtist" class="mini-artist">–</div>
+    </div>
+    <button id="miniOpen" class="mini-open" type="button" title="Player öffnen">▴</button>
+  </footer>
+
+  <!-- Overlay Player -->
   <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
-    <div class="player-wrap">
-      <div class="backbar">
-        <button id="closeOverlay" class="backbtn" aria-label="Zurück zur Übersicht" type="button">⟵ Zurück</button>
+    <div class="player">
+      <div class="player-top">
+        <button id="closeOverlay" class="backbtn" type="button">← Zurück</button>
       </div>
 
-      <section class="nowarea">
-        <img id="bigcover" class="bigcover" alt="Cover" />
-        <div class="trackmeta">
-          <p id="title" class="t">–</p>
-          <p id="artist" class="a">–</p>
+      <img id="bigcover" class="bigcover" alt="Cover" />
+
+      <div class="meta">
+        <div id="title" class="title">–</div>
+        <div id="artist" class="artist">–</div>
+      </div>
+
+      <div class="seek-row">
+        <div id="elapsed" class="time">0:00</div>
+        <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
+        <div id="total" class="time">0:00</div>
+      </div>
+
+      <div class="controls-row">
+        <button id="shuffle" class="icon" type="button" title="Shuffle">🔀</button>
+        <button id="lyricsToggle" class="icon" type="button" title="Lyrics / Notes">♪</button>
+
+        <div class="main-controls">
+          <button id="prev" class="icon" type="button" title="Zurück">⏮</button>
+          <button id="playToggle" class="main" type="button" title="Play/Pause">▶</button>
+          <button id="next" class="icon" type="button" title="Weiter">⏭</button>
         </div>
-      </section>
 
-      <section class="bottomarea">
-  <!-- Seek -->
-  <div class="seek-row">
-    <div id="elapsed" class="time">0:00</div>
-    <input type="range" id="seek" min="0" max="1000" step="1" value="0" />
-    <div id="total" class="time">0:00</div>
-  </div>
+        <button id="repeat" class="icon" type="button" title="Repeat">🔁</button>
+      </div>
 
-  <!-- Controls + Lyrics-Button -->
-  <div class="controls-row">
-    <button id="shuffle" class="icon" aria-pressed="false" title="Shuffle" type="button">🔀</button>
-    <button id="lyricsToggle" class="icon" title="Lyrics anzeigen" type="button">♪</button>
-
-    <div class="main-controls">
-      <button id="prev" class="icon" title="Zurück" type="button">⏮</button>
-      <button id="playToggle" class="main" title="Play/Pause" type="button">▶</button>
-      <button id="next" class="icon" title="Weiter" type="button">⏭</button>
-    </div>
-
-    <button id="repeat" class="icon" title="Repeat" type="button">🔁</button>
-  </div>
-
-  <!-- KEINE Lautstärke-Leiste mehr -->
-
-  <!-- Lyrics-Panel zum Scrollen -->
-  <div id="lyricsPanel" class="lyrics-panel hidden">
-    <div class="lyrics-panel-inner">
-      <h3>Lyrics / Notes</h3>
-      <div id="lyricsScroll" class="lyrics-scroll">
-        Keine Lyrics hinterlegt.
+      <!-- Lyrics Panel -->
+      <div id="lyricsPanel" class="lyrics-panel hidden">
+        <div class="lyrics-panel-inner">
+          <h3>Lyrics / Notes</h3>
+          <div id="lyricsScroll" class="lyrics-scroll">Keine Lyrics hinterlegt.</div>
+        </div>
       </div>
     </div>
   </div>
-</section>
-    </div>
-  </div>
 
-  <script defer src="app.js"></script>
+  <script defer src="app.js?v=wr-final1"></script>
 </body>
 </html>
