@@ -7,7 +7,18 @@
 https://github.com/user-attachments/assets/b0117485-c2d3-4148-8be4-94e4fa98552c
 
 
+Technische Features & Inhalt
+SoundCloud-Integration: Nutzung des SoundCloud-Widgets als Audio-Engine, gesteuert über eine eigene JavaScript-Logik.
 
+Dynamische Playlist: Die Songs werden aus einer Datenstruktur geladen, wodurch die Liste jederzeit einfach erweiterbar ist.
+
+Echtzeit-Suche: Filterfunktion, die das Grid sofort nach Songtiteln oder Künstlern durchsucht.
+
+Smart State (LocalStorage): Die App merkt sich den aktuellen Song, die Lautstärke und die Abspielposition, sodass der Nutzer beim Neuladen der Seite genau dort fortfahren kann, wo er aufgehört hat.
+
+Responsive Full-Screen Player: Ein immersives Overlay mit Fortschrittsbalken, Lautstärkeregelung und einem Lyrics-Panel.
+
+Theme-Switch: Vollständige Unterstützung von Dark- und Light-Mode über CSS-Variablen.
 
 
 ## 24.10. bis 19.12.2025
