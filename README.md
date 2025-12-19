@@ -7,7 +7,7 @@
 https://github.com/user-attachments/assets/b0117485-c2d3-4148-8be4-94e4fa98552c
 
 
-Technische Features & Inhalt
+## Technische Features & Inhalt
 SoundCloud-Integration: Nutzung des SoundCloud-Widgets als Audio-Engine, gesteuert über eine eigene JavaScript-Logik.
 
 Dynamische Playlist: Die Songs werden aus einer Datenstruktur geladen, wodurch die Liste jederzeit einfach erweiterbar ist.
@@ -19,6 +19,12 @@ Smart State (LocalStorage): Die App merkt sich den aktuellen Song, die Lautstär
 Responsive Full-Screen Player: Ein immersives Overlay mit Fortschrittsbalken, Lautstärkeregelung und einem Lyrics-Panel.
 
 Theme-Switch: Vollständige Unterstützung von Dark- und Light-Mode über CSS-Variablen.
+
+## Reflexion
+
+Problemlösung (Beispiel Symmetrie): Anfangs gab es Schwierigkeiten bei der Ausrichtung der Steuerknöpfe. Ein einfaches Flexbox-Layout reichte nicht aus, um die Play-Taste mathematisch genau zu zentrieren. Durch den Wechsel auf ein komplexeres CSS-Grid-System konnte dieses Problem gelöst werden.
+
+Umgang mit Komplexität (Beispiel Lyrics): Während der Entwicklung wurde versucht, ein synchronisiertes Lyrics-System einzubauen. Dabei wurde klar, dass das manuelle Mapping von Timestamps bei einer grossen Anzahl von Songs sehr aufwendig ist. Als Lösung wurde ein statisches Lyrics-Panel implementiert, das die Information sauber anzeigt, ohne die Code-Komplexität unnötig aufzublähen. Dies war eine wichtige Lektion in "Scope-Management" also zu entscheiden, welche Features sinnvoll und mit dem verfügbaren Zeitaufwand umsetzbar sind.
 
 
 ## 24.10. bis 19.12.2025
