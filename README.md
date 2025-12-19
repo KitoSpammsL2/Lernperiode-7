@@ -1,6 +1,6 @@
 # Lern-Periode 7
 
-## Mein Peojekt
+## Mein Projekt
 
 
 
