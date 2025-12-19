@@ -7,14 +7,13 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <h1>WhiteRice</h1>
-      <p>Suche · Filter · Mini-Player · Vollbild-Player (Playback bleibt)</p>
-    </div>
+    <header class="topbar">
+      <div class="header-center">
+        <h1>WhiteRice</h1>
+      </div>
 
-    <button id="themeBtn" class="theme-btn" title="Dark/Light" type="button">🌙</button>
-  </header>
+      <button id="themeBtn" class="theme-btn" title="Dark/Light" type="button">🌙</button>
+    </header>
 
   <main class="page">
     <div class="searchwrap">
@@ -31,7 +30,6 @@
     </section>
   </main>
 
-  <!-- SoundCloud Widget (unsichtbar, bleibt immer aktiv) -->
   <iframe
     id="sc"
     title="SoundCloud Player"
@@ -40,7 +38,6 @@
   ></iframe>
   <script src="https://w.soundcloud.com/player/api.js"></script>
 
-  <!-- Mini Player (unten, immer sichtbar) -->
   <footer id="mini" class="mini">
     <button id="miniPlay" class="mini-play" type="button" aria-label="Play/Pause">▶</button>
     <img id="miniCover" class="mini-cover" alt="" />
@@ -51,7 +48,6 @@
     <button id="miniOpen" class="mini-open" type="button" title="Player öffnen">▴</button>
   </footer>
 
-  <!-- Overlay Player -->
   <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
     <div class="player">
       <div class="player-top">
@@ -72,8 +68,10 @@
       </div>
 
       <div class="controls-row">
-        <button id="shuffle" class="icon" type="button" title="Shuffle">🔀</button>
-        <button id="lyricsToggle" class="icon" type="button" title="Lyrics / Notes">♪</button>
+        <div class="side-controls left">
+          <button id="shuffle" class="icon" type="button" title="Shuffle">🔀</button>
+          <button id="lyricsToggle" class="icon" type="button" title="Lyrics / Notes">♪</button>
+        </div>
 
         <div class="main-controls">
           <button id="prev" class="icon" type="button" title="Zurück">⏮</button>
@@ -81,10 +79,11 @@
           <button id="next" class="icon" type="button" title="Weiter">⏭</button>
         </div>
 
-        <button id="repeat" class="icon" type="button" title="Repeat">🔁</button>
+        <div class="side-controls right">
+          <button id="repeat" class="icon" type="button" title="Repeat">🔁</button>
+        </div>
       </div>
 
-      <!-- Lyrics Panel -->
       <div id="lyricsPanel" class="lyrics-panel hidden">
         <div class="lyrics-panel-inner">
           <h3>Lyrics / Notes</h3>

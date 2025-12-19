@@ -136,13 +136,9 @@ Im on the that lean lil bitch
 Kick the bitch out I dont need the bitch
   `,
   
-  // Beispiel für weitere Songs:
-  // "EsDeeKid – LV Sandals": `
-  //   Deine Notizen oder umgeschriebener Text…
-  // `,
+  
 };
 
-/* === DOM-Shortcuts === */
 const $ = q => document.querySelector(q);
 const bigcover  = $("#bigcover");
 const titleEl   = $("#title");

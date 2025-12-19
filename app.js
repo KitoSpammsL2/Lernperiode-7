@@ -5,7 +5,6 @@
 /* Tracks (deine Liste) */
 const TRACKS = [
   // Carti
-  { title: "Playboi Carti – Long Time", url: "https://soundcloud.com/xoxo-beats-10229998/long-time-playboicarti-best" },
   { title: "Playboi Carti – Location", url: "https://soundcloud.com/user-584825425/playboi-carti-location-official-audio-3" },
   { title: "Playboi Carti – Fell In Luv", url: "https://soundcloud.com/adrian-gonzalez-659551024/fell-in-luv-playboicarti-1" },
   { title: "Playboi Carti – Molly", url: "https://soundcloud.com/user-330873910/molly-14" },
@@ -442,27 +441,45 @@ async function renderGrid(){
   }
 }
 
+function flashActive(el){
+  if(!el) return;
+  el.classList.add("btn-active");
+  setTimeout(()=> el.classList.remove("btn-active"), 160);
+}
+
+
 /* ============= Events ============= */
-themeBtn.onclick = toggleTheme;
+themeBtn.onclick = () => {
+  flashActive(themeBtn);
+  toggleTheme();
+};
 
 searchEl.addEventListener("input", (e)=>{
   q = e.target.value || "";
   renderGrid();
 });
 
-closeOverlay.onclick = closeOverlayFn;
+closeOverlay.onclick = () => {
+  flashActive(closeOverlay);
+  closeOverlayFn();
+};
+
 overlay.addEventListener("click",(e)=>{
   if(e.target === overlay) closeOverlayFn();
 });
 
-miniOpen.onclick = openOverlay;
+miniOpen.onclick = () => {
+  flashActive(miniOpen);
+  openOverlay();
+};
+
 mini.addEventListener("click",(e)=>{
-  // nicht wenn auf Play-Button gedrückt
   if(e.target === miniPlay || e.target === miniOpen) return;
   openOverlay();
 });
 
 miniPlay.onclick = ()=>{
+  flashActive(miniPlay);
   widget.isPaused((paused)=>{
     if(paused) widget.play();
     else widget.pause();
@@ -470,31 +487,43 @@ miniPlay.onclick = ()=>{
 };
 
 playToggle.onclick = ()=>{
+  flashActive(playToggle);
   widget.isPaused((paused)=>{
     if(paused) widget.play();
     else widget.pause();
   });
 };
 
-prevBtn.onclick = prev;
-nextBtn.onclick = next;
+prevBtn.onclick = ()=>{
+  flashActive(prevBtn);
+  prev();
+};
+
+nextBtn.onclick = ()=>{
+  flashActive(nextBtn);
+  next();
+};
 
 shuffleBtn.onclick = ()=>{
+  flashActive(shuffleBtn);
   shuffle = !shuffle;
   shuffleBtn.style.opacity = shuffle ? "1" : ".6";
   makeOrder();
 };
 
 repeatBtn.onclick = ()=>{
+  flashActive(repeatBtn);
   repeatMode = (repeatMode + 1) % 3;
   updateRepeatIcon();
 };
 
 lyricsToggle.onclick = ()=>{
+  flashActive(lyricsToggle);
   lyricsPanel.classList.toggle("hidden");
   const active = !lyricsPanel.classList.contains("hidden");
   lyricsToggle.classList.toggle("active", active);
 };
+
 
 seek.addEventListener("input",(e)=>{
   isSeeking = true;
@@ -543,3 +572,9 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   // start with lyrics panel closed
   lyricsPanel.classList.add("hidden");
 });
+
+function flashActive(el){
+  el.classList.add("active");
+  setTimeout(()=>el.classList.remove("active"),150);
+}
+
