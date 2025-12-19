@@ -88,6 +88,8 @@ Ich habe es fast geschafft, die Lyrics einzubauen. Momentan habe ich einen Butto
 Das Thema Lyrics ist viel aufwendiger, als ich am Anfang gedacht habe, und ich glaube, ich habe mich da etwas überschätzt. Zum einen darf man Lyrics wegen dem Urheberrecht eigentlich nicht einfach so verwenden, und zum anderen ist es sehr mühsam, jede Zeile einzeln hinzuzufügen. Das Timing der Lyrics habe ich auch ausprobiert, aber das hat nicht so funktioniert, wie ich es mir vorgestellt habe. Ich habe versucht, die Zeit im Song zu beobachten und dann aufzuschreiben, bei welcher Sekunde welche Zeile kommt, zum Beispiel bei Sekunde 38 diese Bar. Das wäre aber extrem viel Arbeit, selbst nur für ein einziges Lied. Vielleicht gibt es dafür einfachere Lösungen, aber für mich hat es so nicht richtig gepasst. Trotzdem bin ich sehr zufrieden mit dem, was ich bisher erreicht habe.
 
 <img width="325" height="463" alt="image" src="https://github.com/user-attachments/assets/e35657fb-e90a-4807-9d23-a494c5a5142d" />
+
+
 - [x] versucht Timing vom Lied zu den lyricy
 - [x] Animationen besser machen von den Lyrics
 - [ ] Von mehr Liedern die Lyrics hinzufügen
